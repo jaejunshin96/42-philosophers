@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:26:20 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/20 18:14:26 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/20 21:47:46 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_philo	*init_philo(void)
 {
 	t_philo	*philo;
-	
-	philo = (t_philo *)malloc(sizeof(t_philo) * 100);
+
+	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo == NULL)
 	{
 		perror("init philo");
@@ -46,11 +46,10 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	printf("here\n");
 	philo = init_philo();
 	// usleep(10000);
-	pthread_create(&thread, NULL, print_random, NULL);
-	printf("here1\n");
-	// pthread_join(thread, NULL);
+	pthread_create(&thread, NULL, print_random, (void *)philo);
+	pthread_join(thread, NULL);
+	printf("time to die - %d\n", philo->time_to_die);
 	return (0);
 }

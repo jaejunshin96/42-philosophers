@@ -5,10 +5,10 @@ CFLAGS	= -Wall -Wextra -Werror
 
 SRCS	= *.c
 
-$(NAME): 
+$(NAME):
 	@$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 	@make clean
-	@echo "Compiled successfully."
+	@echo "philo has been created."
 
 all: $(NAME)
 
@@ -17,7 +17,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "Cleaned philo."
+	@echo "philo has been deleted."
 
 re: fclean all
 
