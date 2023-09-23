@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 16:26:20 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/23 21:29:34 by jaeshin          ###   ########.fr       */
+/*   Created: 2023/09/23 20:55:01 by jaeshin           #+#    #+#             */
+/*   Updated: 2023/09/23 20:55:16 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+int	ft_atoi(const char *str)
 {
-	t_args *args;
+	int	i;
+	int	minus;
+	int	result;
 
-	args = init_args(argc, argv);
-	
-	return (0);
+	i = 0;
+	minus = 1;
+	result = 0;
+	while (str[i] == ' ' || (9 <= str[i] && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			minus *= -1;
+		i++;
+	}
+	while ('0' <= str[i] && str[i] <= '9')
+	{
+		result = (str[i] - '0') + (result * 10);
+		i++;
+	}
+	return (result * minus);
 }
