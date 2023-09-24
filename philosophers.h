@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:46:06 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/23 22:11:13 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/24 12:43:14 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ t_total	*init_total(int argc, char **argv);
 
 //****************************UTILES**************************
 int	ft_atoi(const char *str);
+
+//****************************ERROR**************************
+void	init_err(t_total *total);
 
 #endif
