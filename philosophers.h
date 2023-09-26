@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:46:06 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/24 12:43:14 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:15:59 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ typedef struct s_total {
 }	t_total;
 
 //****************************INIT****************************
-t_args	*init_args(int argc, char **argv);
-t_philo	*init_philo(t_args *args);
+t_args		*init_args(int argc, char **argv);
+t_philo		*init_philo(t_args *args);
 t_chopstick	*init_chopstick(t_args *args);
-t_total	*init_total(int argc, char **argv);
+t_total		*init_total(int argc, char **argv);
 
 //****************************UTILES**************************
-int	ft_atoi(const char *str);
+int			ft_atoi(const char *str);
 
 //****************************ERROR**************************
-void	init_err(t_total *total);
+void		init_err(t_total *total);
 
 #endif
