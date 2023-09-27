@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/24 13:03:06 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/27 14:21:35 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ t_args	*init_args(int argc, char **argv)
 	return (args);
 }
 
-t_chopstick	*init_chopstick(t_args *args)
+t_fork	*init_fork(t_args *args)
 {
-	t_chopstick	*chopstick;
+	t_fork		*fork;
 	int			i;
 
-	chopstick = (t_chopstick *)malloc(sizeof(t_chopstick) * args->nbr_of_phil);
-	if (chopstick == NULL)
+	fork = (t_fork *)malloc(sizeof(t_fork) * args->nbr_of_phil);
+	if (fork == NULL)
 		return (NULL);
 	i = 0;
 	while (i < args->nbr_of_phil)
 	{
-		chopstick[i].id = i + 1;
-		pthread_mutex_init(&chopstick[i].mutex, NULL);
+		fork[i].id = i + 1;
+		pthread_mutex_init(&fork[i].mutex, NULL);
 		i++;
 	}
-	return (chopstick);
+	return (fork);
 }
 
 t_philo	*init_philo(t_args *args)
@@ -58,11 +58,12 @@ t_philo	*init_philo(t_args *args)
 	while (i < args->nbr_of_phil)
 	{
 		philo[i].id = i + 1;
-		philo[i].r_chopstick = i + 1;
+		philo[i].r_fork = i + 1;
 		if (i + 1 < args->nbr_of_phil)
-			philo[i].l_chopstick = i + 2;
+			philo[i].l_fork = i + 2;
 		else
-			philo[i].l_chopstick = 1;
+			philo[i].l_fork = 1;
+		philo[i].args = args;
 		i++;
 	}
 	philo->count_of_eat = 0;
