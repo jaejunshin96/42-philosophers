@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:46:06 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/28 14:25:51 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/28 22:00:05 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_args {
 	int				nbr_of_must_eat;
 	int				total_nbr_eat;
 	long long		start_time;
+	t_fork			*forks;
 	pthread_mutex_t	active;
 }	t_args;
 
@@ -44,7 +45,7 @@ typedef struct s_philo {
 }	t_philo;
 
 typedef struct s_total {
-	t_fork		*chopsticks;
+	t_fork		*forks;
 	t_args		*args;
 	t_philo		*philos;
 }	t_total;

@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:26:20 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/28 16:43:41 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/28 22:06:20 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ void	*thread_function(void *p)
 	pthread_mutex_lock(&philo->args->active);
 	time = get_time();
 	printf("%lldms philo %d\n",time - philo->args->start_time , philo->id);
+	pthread_mutex_lock(&philo->args->forks[philo->r_fork].mutex);
+	pthread_mutex_lock(&philo->args->forks[philo->l_fork].mutex);
+	time = get_time();
+	printf("%lldms philo %d has taken a fork.\n",time - philo->args->start_time , philo->id);
+	printf("%lldms philo %d has taken a fork.\n",time - philo->args->start_time , philo->id);
+	pthread_mutex_unlock(&philo->args->forks[philo->r_fork].mutex);
+	pthread_mutex_unlock(&philo->args->forks[philo->l_fork].mutex);
 	pthread_mutex_unlock(&philo->args->active);
 	return (NULL);
 }
