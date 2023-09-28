@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/27 14:21:35 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/28 14:26:58 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_args	*init_args(int argc, char **argv)
 	t_args	*args;
 
 	args = (t_args *)malloc(sizeof(t_args));
-	if (args == NULL)
+	if (args == NULL) 
 		return (NULL);
+	pthread_mutex_init(&args->active, NULL);
 	args->nbr_of_phil = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
@@ -82,7 +83,7 @@ t_total	*init_total(int argc, char **argv)
 	total->args = init_args(argc, argv);
 	if (total->args == NULL)
 		return (NULL);
-	total->chopsticks = init_chopstick(total->args);
+	total->chopsticks = init_fork(total->args);
 	if (total->chopsticks == NULL)
 		return (NULL);
 	total->philos = init_philo(total->args);

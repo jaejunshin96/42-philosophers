@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:46:06 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/27 14:20:50 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/28 14:25:51 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ typedef struct s_fork {
 }	t_fork;
 
 typedef struct s_args {
-	int			nbr_of_phil;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nbr_of_must_eat;
-	int			total_nbr_eat;
-	long long	start_time;
+	int				nbr_of_phil;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nbr_of_must_eat;
+	int				total_nbr_eat;
+	long long		start_time;
+	pthread_mutex_t	active;
 }	t_args;
 
 typedef struct s_philo {
