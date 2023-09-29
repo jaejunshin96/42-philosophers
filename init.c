@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/28 22:00:42 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/29 17:42:48 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_args	*init_args(int argc, char **argv)
 	args = (t_args *)malloc(sizeof(t_args));
 	if (args == NULL)
 		return (NULL);
-	pthread_mutex_init(&args->active, NULL);
+	pthread_mutex_init(&args->action, NULL);
+	pthread_mutex_init(&args->print, NULL);
 	args->nbr_of_phil = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
