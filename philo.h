@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 16:46:06 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/29 17:42:39 by jaeshin          ###   ########.fr       */
+/*   Created: 2023/09/30 12:36:26 by jaeshin           #+#    #+#             */
+/*   Updated: 2023/09/30 19:52:28 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 #include <unistd.h>
 #include <stdio.h>
@@ -19,6 +19,7 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+# define FORK 0
 # define EAT 1
 # define SLEEP 2
 # define THINK 3
@@ -43,11 +44,13 @@ typedef struct s_args {
 }	t_args;
 
 typedef struct s_philo {
-	int		id;
-	int		l_fork;
-	int		r_fork;
-	int		count_of_eat;
-	t_args	*args;
+	pthread_t	thread;
+	int			flag;
+	int			id;
+	int			l_fork;
+	int			r_fork;
+	int			count_of_eat;
+	t_args		*args;
 }	t_philo;
 
 typedef struct s_total {
@@ -64,6 +67,7 @@ t_total		*init_total(int argc, char **argv);
 
 // UTILES
 long long	get_time(void);
+int			ft_usleep(long long time);
 int			ft_atoi(const char *str);
 
 // ERROR

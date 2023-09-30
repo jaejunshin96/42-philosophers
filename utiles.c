@@ -6,11 +6,11 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:55:01 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/29 17:17:28 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/30 19:52:16 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 long long	get_time(void)
 {
@@ -19,6 +19,16 @@ long long	get_time(void)
 	if (gettimeofday(&time, NULL) == -1)
 		printf("get time erorr\n");
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	ft_usleep(long long time)
+{
+	long long	start;
+
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(500);
+	return (0);
 }
 
 int	ft_atoi(const char *str)

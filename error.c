@@ -6,11 +6,11 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 12:42:07 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/24 12:42:40 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/30 12:40:59 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 void	init_err(t_total *total)
 {

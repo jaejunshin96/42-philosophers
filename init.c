@@ -6,11 +6,11 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/29 17:42:48 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/09/30 17:45:25 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 t_args	*init_args(int argc, char **argv)
 {
@@ -19,14 +19,14 @@ t_args	*init_args(int argc, char **argv)
 	args = (t_args *)malloc(sizeof(t_args));
 	if (args == NULL)
 		return (NULL);
-	pthread_mutex_init(&args->action, NULL);
-	pthread_mutex_init(&args->print, NULL);
 	args->nbr_of_phil = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
 	args->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		args->nbr_of_must_eat = ft_atoi(argv[5]);
+	pthread_mutex_init(&args->action, NULL);
+	pthread_mutex_init(&args->print, NULL);
 	return (args);
 }
 
@@ -61,11 +61,12 @@ t_philo	*init_philo(t_args *args)
 	while (i < args->nbr_of_phil)
 	{
 		philo[i].id = i + 1;
-		philo[i].r_fork = i + 1;
+		philo[i].flag = 1;
+		philo[i].r_fork = i;
 		if (i + 1 < args->nbr_of_phil)
-			philo[i].l_fork = i + 2;
+			philo[i].l_fork = i + 1;
 		else
-			philo[i].l_fork = 1;
+			philo[i].l_fork = 0;
 		philo[i].args = args;
 		i++;
 	}
