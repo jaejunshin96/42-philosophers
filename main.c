@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:26:20 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/30 19:53:39 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/01 15:36:15 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,25 @@ void	print_action(t_philo *p, long long start_time, int state)
 	pthread_mutex_unlock(&p->args->print);
 }
 
-void	philo_eat(t_philo *p)
+int	philo_eat(t_philo *p)
 {
-	pthread_mutex_lock(&p->args->forks[p->r_fork].mutex);
+	if (pthread_mutex_lock(&p->args->forks[p->r_fork].mutex))
+		return (0);
+	if (pthread_mutex_lock(&p->args->forks[p->l_fork].mutex))
+		return (0);
 	print_action(p, p->args->start_time, FORK);
-	pthread_mutex_lock(&p->args->forks[p->l_fork].mutex);
 	print_action(p, p->args->start_time, FORK);
 	print_action(p, p->args->start_time, EAT);
-	p->count_of_eat++;
-	pthread_mutex_unlock(&p->args->forks[p->r_fork].mutex);
-	pthread_mutex_unlock(&p->args->forks[p->l_fork].mutex);
 	ft_usleep(p->args->time_to_eat);
+	p->count_of_eat++;
+	return (1);
 }
 
 void	philo_sleep(t_philo *p)
 {
 	print_action(p, p->args->start_time, SLEEP);
-	pthread_mutex_unlock(&p->args->action);
+	pthread_mutex_unlock(&p->args->forks[p->r_fork].mutex);
+	pthread_mutex_unlock(&p->args->forks[p->l_fork].mutex);
 	ft_usleep(p->args->time_to_sleep);
 }
 
@@ -61,43 +63,39 @@ void	*thread_func(void *philo)
 	t_philo		*p;
 
 	p = (t_philo *)philo;
-	pthread_mutex_lock(&p->args->action);
+	if (p->id % 2 == 0)
+		usleep(10);
 	while (p->flag)
 	{
-		philo_eat(p);
+		if (!philo_eat(p))
+			continue;
 		philo_sleep(p);
 		philo_think(p);
 	}
 	return (NULL);
 }
 
-// print action to be fixed
-int	main(int argc, char **argv)
+void	create_run_thread(t_total *total)
 {
-	t_total		*total;
-	int			i;
+	int	i;
 
-	total = init_total(argc, argv);
-	init_err(total);
-	total->args->start_time = get_time();
 	i = -1;
 	while (++i < total->args->nbr_of_phil)
 	{
 		pthread_create(&total->philos[i].thread,\
 		 NULL, thread_func, &total->philos[i]);
-		ft_usleep(1);
+		usleep(10);
 	}
+}
 
+int	main(int argc, char **argv)
+{
+	t_total		*total;
 
-	i = -1;
-	while (++i < total->args->nbr_of_phil)
-		pthread_join(total->philos[i].thread, NULL);
-
-
-	i = -1;
-	while (++i < total->args->nbr_of_phil)
-		pthread_mutex_destroy(&(total->forks[i].mutex));
-	pthread_mutex_destroy(&total->args->action);
-	pthread_mutex_destroy(&total->args->print);
+	total = init_total(argc, argv);
+	init_err(total);
+	create_run_thread(total);
+	join_thread(total);
+	destroy_mutex(total);
 	return (0);
 }

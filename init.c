@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/30 17:45:25 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/01 15:34:36 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_args	*init_args(int argc, char **argv)
 	args->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		args->nbr_of_must_eat = ft_atoi(argv[5]);
+	args->start_time = get_time();
 	pthread_mutex_init(&args->action, NULL);
 	pthread_mutex_init(&args->print, NULL);
 	return (args);

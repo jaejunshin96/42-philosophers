@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 12:36:26 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/09/30 19:52:28 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/01 15:36:40 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ t_args		*init_args(int argc, char **argv);
 t_philo		*init_philo(t_args *args);
 t_fork		*init_fork(t_args *args);
 t_total		*init_total(int argc, char **argv);
+
+// THREAD
+void		join_thread(t_total *total);
+void		destroy_mutex(t_total *total);
 
 // UTILES
 long long	get_time(void);
