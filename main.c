@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:26:20 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/01 15:36:15 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/03 17:15:08 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,21 @@ void	print_action(t_philo *p, long long start_time, int state)
 	pthread_mutex_unlock(&p->args->print);
 }
 
+int	check_eat_count(t_philo *p)
+{
+	if (p->args->nbr_of_must_eat > 0 && \
+		p->count_of_eat >= p->args->nbr_of_must_eat)
+	{
+		p->flag = 0;
+		return (0);
+	}
+	return (1);
+}
+
 int	philo_eat(t_philo *p)
 {
+	if (!check_eat_count(p))
+		return (0);
 	if (pthread_mutex_lock(&p->args->forks[p->r_fork].mutex))
 		return (0);
 	if (pthread_mutex_lock(&p->args->forks[p->l_fork].mutex))
@@ -40,6 +53,7 @@ int	philo_eat(t_philo *p)
 	print_action(p, p->args->start_time, FORK);
 	print_action(p, p->args->start_time, FORK);
 	print_action(p, p->args->start_time, EAT);
+	p->last_meal += p->args->time_to_eat;
 	ft_usleep(p->args->time_to_eat);
 	p->count_of_eat++;
 	return (1);
@@ -75,16 +89,66 @@ void	*thread_func(void *philo)
 	return (NULL);
 }
 
+// to be fixed
+void	*monitor(void *total)
+{
+	t_total	*t;
+	int	i;
+
+	t = (t_total *)total;
+	i = -1;
+	printf("%d\n", t->args->nbr_of_phil);
+	printf("%lld\n", (get_time()));
+	printf("%lld\n", (get_time() - t->philos[0].last_meal));
+	while (++i < t->args->nbr_of_phil)
+	{
+		if (t->args->time_to_die <= (get_time() - t->philos[i].last_meal))
+		{
+			print_action(&t->philos[i], t->args->start_time, DIE);
+			i = -1;
+			while (++i < t->args->nbr_of_phil)
+				t->philos[i].flag = 0;
+			break;
+			printf("monitor\n");
+		}
+		if (i + 1 == t->args->nbr_of_phil)
+			i = -1;
+	}
+	return (NULL);
+}
+
 void	create_run_thread(t_total *total)
 {
+	pthread_t	observer;
 	int	i;
 
 	i = -1;
+	pthread_create(&observer, NULL, monitor, &total);
 	while (++i < total->args->nbr_of_phil)
 	{
 		pthread_create(&total->philos[i].thread,\
 		 NULL, thread_func, &total->philos[i]);
 		usleep(10);
+	}
+	pthread_join(observer, NULL);
+	i = -1;
+	while (++i < total->args->nbr_of_phil)
+		pthread_join(total->philos[i].thread, NULL);
+}
+
+void	print_if_all_eaten(t_total *total)
+{
+	int			i;
+
+	i = -1;
+	while (total->args->nbr_of_must_eat > 0 && \
+		++i < total->philos->args->nbr_of_phil)
+	{
+		if (total->philos[i].count_of_eat < total->args->nbr_of_must_eat)
+			break;
+		if (i + 1 == total->args->nbr_of_phil)
+			printf("Everyone has eaten %d times.\n", \
+				total->args->nbr_of_must_eat);
 	}
 }
 
@@ -95,7 +159,7 @@ int	main(int argc, char **argv)
 	total = init_total(argc, argv);
 	init_err(total);
 	create_run_thread(total);
-	join_thread(total);
 	destroy_mutex(total);
+	print_if_all_eaten(total);
 	return (0);
 }

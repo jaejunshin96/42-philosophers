@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 12:36:26 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/01 15:36:40 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/03 14:24:20 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_philo {
 	int			id;
 	int			l_fork;
 	int			r_fork;
+	long long	last_meal;
 	int			count_of_eat;
 	t_args		*args;
 }	t_philo;
@@ -66,7 +67,6 @@ t_fork		*init_fork(t_args *args);
 t_total		*init_total(int argc, char **argv);
 
 // THREAD
-void		join_thread(t_total *total);
 void		destroy_mutex(t_total *total);
 
 // UTILES

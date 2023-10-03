@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/01 15:34:36 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/03 17:05:39 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ t_philo	*init_philo(t_args *args)
 	while (i < args->nbr_of_phil)
 	{
 		philo[i].id = i + 1;
-		philo[i].flag = 1;
+		philo[i].flag = 42;
 		philo[i].r_fork = i;
 		if (i + 1 < args->nbr_of_phil)
 			philo[i].l_fork = i + 1;
 		else
 			philo[i].l_fork = 0;
+		philo[i].last_meal = args->start_time;
 		philo[i].args = args;
 		i++;
 	}
