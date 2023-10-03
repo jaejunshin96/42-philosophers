@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 12:36:26 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/03 14:24:20 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:34:30 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_total		*init_total(int argc, char **argv);
 void		destroy_mutex(t_total *total);
 
 // UTILES
+void		print_action(t_philo *p, long long start_time, int state);
 long long	get_time(void);
 int			ft_usleep(long long time);
 int			ft_atoi(const char *str);
