@@ -1,6 +1,6 @@
 NAME	= philo
 
-CC		= gcc
+CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
 SRCS	= *.c

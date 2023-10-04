@@ -6,34 +6,15 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:55:01 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/03 21:34:21 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:10:18 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_action(t_philo *p, long long start_time, int state)
-{
-	long long	time;
-
-	time = get_time() - start_time;
-	pthread_mutex_lock(&p->args->print);
-	if (state == FORK)
-		printf("%lldms philo %d has taken a fork.\n", time, p->id);
-	else if (state == EAT)
-		printf("%lldms philo %d is eating.\n", time, p->id);
-	else if (state == SLEEP)
-		printf("%lldms philo %d is sleeping.\n", time, p->id);
-	else if (state == THINK)
-		printf("%lldms philo %d is thinking.\n", time, p->id);
-	else
-		printf("%lldms philo %d died.\n", time, p->id);
-	pthread_mutex_unlock(&p->args->print);
-}
-
 long long	get_time(void)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
 		printf("get time erorr\n");
@@ -48,6 +29,14 @@ int	ft_usleep(long long time)
 	while ((get_time() - start) < time)
 		usleep(500);
 	return (0);
+}
+
+void	free_memory(t_total *total)
+{
+	free(total->forks);
+	free(total->philos);
+	free(total->args);
+	free(total);
 }
 
 int	ft_atoi(const char *str)

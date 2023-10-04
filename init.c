@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 20:52:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/10/03 17:05:39 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:07:17 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_args	*init_args(int argc, char **argv)
 	if (argc == 6)
 		args->nbr_of_must_eat = ft_atoi(argv[5]);
 	args->start_time = get_time();
-	pthread_mutex_init(&args->action, NULL);
 	pthread_mutex_init(&args->print, NULL);
 	return (args);
 }
@@ -39,12 +38,11 @@ t_fork	*init_fork(t_args *args)
 	fork = (t_fork *)malloc(sizeof(t_fork) * args->nbr_of_phil);
 	if (fork == NULL)
 		return (NULL);
-	i = 0;
-	while (i < args->nbr_of_phil)
+	i = -1;
+	while (++i < args->nbr_of_phil)
 	{
 		fork[i].id = i + 1;
 		pthread_mutex_init(&fork[i].mutex, NULL);
-		i++;
 	}
 	args->forks = fork;
 	return (fork);
@@ -58,8 +56,8 @@ t_philo	*init_philo(t_args *args)
 	philo = (t_philo *)malloc(sizeof(t_philo) * args->nbr_of_phil);
 	if (philo == NULL)
 		return (NULL);
-	i = 0;
-	while (i < args->nbr_of_phil)
+	i = -1;
+	while (++i < args->nbr_of_phil)
 	{
 		philo[i].id = i + 1;
 		philo[i].flag = 42;
@@ -70,7 +68,6 @@ t_philo	*init_philo(t_args *args)
 			philo[i].l_fork = 0;
 		philo[i].last_meal = args->start_time;
 		philo[i].args = args;
-		i++;
 	}
 	philo->count_of_eat = 0;
 	return (philo);
@@ -95,4 +92,13 @@ t_total	*init_total(int argc, char **argv)
 	if (total->philos == NULL)
 		return (NULL);
 	return (total);
+}
+
+void	init_err(t_total *total)
+{
+	if (total == NULL)
+	{
+		printf("init error\n");
+		exit(1);
+	}
 }
